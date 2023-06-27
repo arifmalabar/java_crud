@@ -5,6 +5,8 @@
  */
 package crudjava;
 
+import crudjava.ui.view.LoginGUI;
+
 /**
  *
  * @author arif
@@ -15,7 +17,8 @@ public class CrudJava {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        LoginGUI login = new LoginGUI();
+        login.show();
     }
     
 }
