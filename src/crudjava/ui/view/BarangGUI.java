@@ -6,6 +6,7 @@
 package crudjava.ui.view;
 
 import crudjava.service.koneksi.Koneksi;
+import crudjava.ui.session.SessionValidator;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.List;
@@ -25,6 +26,7 @@ public class BarangGUI extends javax.swing.JFrame {
     private String kode_barang, nama, kategori, cari, sql;
     private int stok;
     public BarangGUI() {
+        SessionValidator.checkSession(this);
         initComponents();
         setTableModel();
     }
@@ -156,9 +158,8 @@ public class BarangGUI extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(txtStok, javax.swing.GroupLayout.DEFAULT_SIZE, 204, Short.MAX_VALUE)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(txtNamaBarang, javax.swing.GroupLayout.DEFAULT_SIZE, 204, Short.MAX_VALUE)
-                        .addComponent(txtKodeBarang)))
+                    .addComponent(txtNamaBarang, javax.swing.GroupLayout.DEFAULT_SIZE, 204, Short.MAX_VALUE)
+                    .addComponent(txtKodeBarang))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -274,6 +275,11 @@ public class BarangGUI extends javax.swing.JFrame {
         jMenuBar1.add(jMenu2);
 
         jMenu3.setText("Logout");
+        jMenu3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenu3MouseClicked(evt);
+            }
+        });
         jMenuBar1.add(jMenu3);
 
         setJMenuBar(jMenuBar1);
@@ -426,6 +432,23 @@ public class BarangGUI extends javax.swing.JFrame {
         cari = txtCari.getText();
         setTableModel(cari);
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jMenu3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu3MouseClicked
+        int logoutconf = JOptionPane.showConfirmDialog(null, "Apakah anda ingin melakukan logout?");
+        switch(logoutconf)
+        {
+            case 0:
+                JOptionPane.showMessageDialog(null, "Anda berhasil logout");
+                SessionValidator.doLogout(this);
+            break;
+            case 1:
+                JOptionPane.showMessageDialog(null, "Anda membatalkan logout");
+            break;
+            default:
+                JOptionPane.showMessageDialog(null, "Anda membatalkan logout");
+            break;    
+        }
+    }//GEN-LAST:event_jMenu3MouseClicked
 
     /**
      * @param args the command line arguments
